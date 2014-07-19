@@ -1,0 +1,32 @@
+<index:>
+  <div class="row pull-right login-box">
+    <div class="dropdown {{@class}}{{if open}} open{{/if}}">
+      <img class="avatar img-circle dropdown-toggle" src="{{#root._session.user.avatar}}" data-toggle="dropdown"
+           as="toggleButton"
+           on-click="toggle()"
+           id="dropdown-toggle{{id}}"/>
+      <ul as="menu" class="dropdown-menu pull-right {{@menuClass}}" role="menu" aria-labelledby="dropdown-toggle{{id}}">
+        <li role="presentation">
+          <a class="" href="/" on-click="select(this)" role="menuitem">
+            <span class="glyphicon glyphicon-home"></span> Home
+          </a>
+          <a class="" href="{{#root._session.user.profileUrl}}" target="_blank" on-click="select(this)" role="menuitem">
+            <span class="glyphicon glyphicon-user"></span> {{#root._session.user.displayName}}
+          </a>
+        </li>
+        {{if #root._session.user.group === 'admin'}}
+        <li role="presentation">
+          <a href="/adm" on-click="select(this)" role="menuitem">
+            <span class="glyphicon glyphicon-cog"></span> Admin
+          </a>
+        </li>
+        {{/if}}
+        <li role="presentation" class="divider"></li>
+        <li role="presentation">
+          <a href="/auth/logout" class="btn btn-link" title="Logout" on-click="select(this)" role="menuitem">
+            <span class="glyphicon glyphicon-log-out"></span> Logout
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>

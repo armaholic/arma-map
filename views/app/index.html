@@ -1,0 +1,25 @@
+<import: src="./home"/>
+<import: src="./sg"/>
+<import: src="./camp"/>
+
+<Head:>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="description" content="Tushino Serious Games"/>
+  <meta name="keywords" content=""/>
+  <meta name="author" content="Skarm"/>
+
+<Title:>
+  TSG
+
+<Body:>
+  {{if #root._session.loggedIn}}
+  <view name="login-dropdown"/>
+  {{/if}}
+  <view name="{{$render.ns}}"/>
+
+<nav-link: element="nav-link">
+    <li class="{{if $render.url === @href}}active{{/}}">
+        <a href="{{@href}}">{{@caption}}</a>
+    </li>

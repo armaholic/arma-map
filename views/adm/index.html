@@ -1,0 +1,58 @@
+<import: src="./dashboard"/>
+<import: src="./users"/>
+<import: src="./maps"/>
+
+<Head:>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="description" content="Tushino Serious Games"/>
+  <meta name="keywords" content=""/>
+  <meta name="author" content="Skarm"/>
+
+<Title:>
+  TSG
+
+<Body:>
+  {{if #root._session.user.group === 'admin'}}
+  <view name="login-dropdown"/>
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">TSG Dashboard</a>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-3 col-md-2 sidebar">
+        <ul class="nav nav-sidebar">
+          <nav-link href="/adm" caption="Dashboard"></nav-link>
+          <nav-link href="/adm/users" caption="Users"></nav-link>
+          <nav-link href="/adm/maps" caption="Maps"></nav-link>
+        </ul>
+      </div>
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <view name="{{$render.ns}}"/>
+      </div>
+    </div>
+  </div>
+  {{else}}
+  <div class="modal show">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <img src="/images/logo.jpg"/>
+        </div>
+        <div class="modal-body">
+          <a href="/" class="btn dtn-default btn-block">Home</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/if}}
+
+<nav-link: element="nav-link">
+    <li class="{{if $render.url === @href}}active{{/}}">
+        <a href="{{@href}}">{{@caption}}</a>
+    </li>

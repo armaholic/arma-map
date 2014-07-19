@@ -1,0 +1,139 @@
+#map-app {
+    cursor: default;
+}
+
+#menu-app {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 10px;
+    z-index: 1000;
+}
+
+/* Base Candidates */
+.label-select {
+    display: none;
+}
+
+.label-select + label {
+    cursor: pointer;
+}
+
+.label-select + label:hover {
+    background: rgba(0, 0, 0, 0.01);
+}
+
+.label-select:checked + label {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.label-select + label.button:hover,
+.label-select:checked + label.button,
+.label-select:checked + label.button:hover,
+.label-select + label.button:hover {
+    background-color: #3bb2d0;
+}
+
+.scroll-h {
+    overflow-x: auto;
+}
+
+.scroll-v {
+    overflow-y: auto;
+}
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+/* Number input styling to consider for base */
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+fieldset .increment {
+    cursor: pointer;
+    height: 19px;
+    width: 21px;
+    position: absolute;
+    right: 1px;
+    top: 1px;
+}
+
+fieldset .increment:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+fieldset .increment.decrease {
+    bottom: 1px;
+    top: auto;
+}
+
+/* App Styles */
+html,
+body {
+    position: relative;
+    height: 100%;
+}
+
+.app {
+    z-index: 1001;
+}
+
+.module {
+    z-index: 1001;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    opacity: 1;
+    width: 500px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.mode {
+    position: fixed;
+}
+
+.offcanvas-fade {
+    opacity: 0;
+}
+
+:target > .offcanvas-fade {
+    opacity: 1;
+}
+
+/* Map */
+#map-app {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: #eee url(/images/canvas.png);
+    overflow: hidden;
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+}
+
+.module.offcanvas-bottom:target ~ #map-app {
+    bottom: 140px;
+}
+
+#map-app.crosshair-mode {
+    cursor: crosshair;
+}
+
+/* Leaflet style overrides */
+.leaflet-container {
+    background: #ddd;
+}
+
+.leaflet-container .leaflet-popup-content-wrapper {
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05);
+}

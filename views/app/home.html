@@ -1,0 +1,32 @@
+<index:>
+  <header>
+    {{if #root._session.loggedIn}}
+    <div class="modal show">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header text-center">
+            <img src="/images/logo.jpg"/>
+          </div>
+          <div class="modal-body">
+            <a href="/camp" class="btn dtn-default btn-block">Campaign</a>
+            <a href="/sg" class="btn dtn-default btn-block">Serious games</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{else}}
+    <div class="modal show">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header text-center">
+            <img src="/images/logo.jpg"/>
+          </div>
+          <div class="modal-body">
+            <a href="/auth/google" class="btn dtn-default btn-block">Login</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+  </header>
+  <div class="bg"></div>

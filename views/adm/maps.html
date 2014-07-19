@@ -1,0 +1,23 @@
+<index:>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th></th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Group</th>
+      </tr>
+      </thead>
+      <tbody>
+      {{each _page.users as #user}}
+      <tr>
+        <td><img class="avatar img-circle" src="{{#user.avatar}}"/></td>
+        <td>{{#user.displayName}}</td>
+        <td>{{#user.email}}</td>
+        <td>{{#user.group}}</td>
+      </tr>
+      {{/each}}
+      </tbody>
+    </table>
+  </div>

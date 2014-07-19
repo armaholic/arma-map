@@ -1,0 +1,19 @@
+<index:>
+  {{if !#root._session.loggedIn}}
+  <header>
+    <div class="modal show">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header text-center">
+            <img src="/images/logo.jpg"/>
+          </div>
+          <div class="modal-body">
+            <a href="/auth/google" class="btn dtn-default btn-block">Login</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  {{else}}
+  <view name="Maps"/>
+  {{/if}}
