@@ -175,10 +175,22 @@ header {
     right: 0;
     left: 0;
     bottom: 0;
-    background: #eee url(/images/canvas.png);
+    background: #eee url(/images/canvas.png) !important;
     overflow: hidden;
     transform: translate3d(0, 0, 0);
     -webkit-transform: translate3d(0, 0, 0);
+}
+
+.mapbox-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: #eee url(/images/canvas.png) !important;
+  overflow: hidden;
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
 }
 
 .module.offcanvas-bottom:target ~ #map-app {
