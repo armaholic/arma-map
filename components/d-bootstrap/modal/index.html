@@ -1,0 +1,73 @@
+<index: arrays="actionSend/actionsSend actionCancel/actionsCancel" attributes="title" element="modal">
+  <div class="modal fade{{if faded}} in{{/if}}" style="{{if show}}display: block{{/if}}">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button on-click="hide('close')" type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+          </button>
+          <h4 class="modal-title">{{@title}}</h4>
+        </div>
+        <div class="modal-body">
+          {{@content}}
+        </div>
+        <div class="modal-footer">
+          {{each @actionsSend}}
+          <button
+              on-click="send(this.value || this.content)"
+              type="{{this.type || 'button'}}"
+              class="btn {{this.class || 'btn-primary'}}">
+            {{this.content}}
+          </button>
+          {{/each}}
+          {{each @actionsCancel}}
+          <button
+              on-click="hide(this.value || this.content)"
+              type="{{this.type || 'reset'}}"
+              class="btn {{this.class || 'btn-default'}}">
+            {{this.content}}
+          </button>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop fade{{if faded}} in{{/if}}" style="display: {{if show}}block{{else}}none{{/if}}"></div>
+
+<index: arrays="actionSend/actionsSend actionCancel/actionsCancel" attributes="title formId" element="modal-newmap">
+  <div class="modal fade{{if faded}} in{{/if}}" style="{{if show}}display: block{{/if}}">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="{{@formId}}" on-submit="addMap()" autocomplete="off">
+          <div class="modal-header">
+            <button on-click="hide('close')" type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+            </button>
+            <h4 class="modal-title">{{@title}}</h4>
+          </div>
+          <div class="modal-body">
+            {{@content}}
+          </div>
+          <div class="modal-footer">
+            {{each @actionsSend}}
+            <button
+                on-click="send(this.value || this.content)"
+                type="{{this.type || 'submit'}}"
+                class="btn {{this.class || 'btn-primary'}}">
+              {{this.content}}
+            </button>
+            {{/each}}
+            {{each @actionsCancel}}
+            <button
+                on-click="hide(this.value || this.content)"
+                type="{{this.type || 'reset'}}"
+                class="btn {{this.class || 'btn-default'}}">
+              {{this.content}}
+            </button>
+            {{/each}}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop fade{{if faded}} in{{/if}}" style="display: {{if show}}block{{else}}none{{/if}}"></div>

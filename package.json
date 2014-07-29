@@ -30,7 +30,9 @@
     "serve-favicon": "^2.0",
     "derby-hook": "^0.0",
     "racer-access": "git://github.com/codeparty/racer-access.git",
-    "d-mapbox" : "0.0.3"
+    "d-mapbox" : "0.0.4",
+    "mapbox.js": "^1.6",
+    "leaflet-draw" : "^0.2"
   },
   "author": {
     "name": "Skarm",

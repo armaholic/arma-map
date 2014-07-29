@@ -1,9 +1,9 @@
-module.exports = lDropdown;
-function lDropdown() {}
-lDropdown.prototype.name = 'login-dropdown';
-lDropdown.prototype.view = __dirname;
+module.exports = Dropdown;
+function Dropdown() {}
+Dropdown.prototype.name = 'dropdown';
+Dropdown.prototype.view = __dirname;
 
-lDropdown.prototype.create = function(model, dom) {
+Dropdown.prototype.create = function(model, dom) {
   // Close on click outside of the dropdown
   var dropdown = this;
   dom.on('click', function(e) {
@@ -13,16 +13,16 @@ lDropdown.prototype.create = function(model, dom) {
   });
 };
 
-lDropdown.prototype.toggle = function() {
+Dropdown.prototype.toggle = function() {
   this.model.set('open', !this.model.get('open'));
 };
 
-lDropdown.prototype.select = function(option) {
+Dropdown.prototype.select = function(option) {
   this.model.set('value', optionValue(option));
   this.model.set('open', false);
 };
 
-lDropdown.prototype.label = function(value) {
+Dropdown.prototype.label = function(value) {
   var options = this.model.get('options') || [];
   for (var i = 0, len = options.length; i < len; i++) {
     var option = options[i];

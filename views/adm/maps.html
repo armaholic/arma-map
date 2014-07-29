@@ -1,23 +1,73 @@
 <index:>
+  <modal-newmap as="newMap" on-send="sendModal()" on-hide="hideModal()">
+    <title>Add new map</title>
+    <div class="form-group">
+      <input class="form-control" placeholder="Map name" id="map-Name" value="{{_page.mapName}}" autofocus required>
+    </div>
+    <div class="form-group">
+      <input class="form-control" placeholder="Tiles path" id="map-Tiles" value="{{_page.mapTiles}}" required>
+      <p class="help-block">/tiles/chernarus_new/{z}/{x}_{y}.jpg</p>
+    </div>
+    <div class="form-group">
+      <input class="form-control" placeholder="Map CRC" id="map-CRC" value="{{_page.mapCRC}}" required>
+    </div>
+    <actionSend type="submit" class="btn btn-primary">Save</actionSend>
+    <actionCancel type="reset" value="close" class="btn btn-default">Cancel</actionCancel>
+    <formId>addNewMap</formId>
+  </modal-newmap>
+
+<!--  <modal as="editMap" on-send="sendModal()" on-hide="hideModal()">
+    <title>Edit map</title>
+    {{each _page.maps as #map}}
+    <div class="form-group">
+      <input class="form-control" placeholder="Map name" id="map-Name" value="{{this.mapName}}" autofocus required>
+    </div>
+    <div class="form-group">
+      <input class="form-control" placeholder="Tiles path" id="map-Tiles" value="{{_page.mapTiles}}" required>
+      <p class="help-block">/tiles/chernarus_new/{z}/{x}_{y}.jpg</p>
+    </div>
+    <div class="form-group">
+      <input class="form-control" placeholder="Map CRC" id="map-CRC" value="{{_page.mapCRC}}" required>
+    </div>
+    {{/each}}
+    <actionSend type="submit" class="btn btn-primary">Save</actionSend>
+    <actionCancel type="reset" value="close" class="btn btn-default">Cancel</actionCancel>
+    <formId>editMap</formId>
+  </modal>-->
+
   <div class="table-responsive">
+    <div class="btn-toolbar" role="toolbar">
+      <div class="btn-group">
+        <button on-click="newMap.show()" class="btn btn-default">Add new map</button>
+      </div>
+    </div>
+    <div class="row">
     <table class="table table-striped">
       <thead>
       <tr>
-        <th></th>
-        <th>Username</th>
-        <th>Email</th>
-        <th>Group</th>
+        <th class="col-md-4">Mapname</th>
+        <th class="col-md-3">Tiles</th>
+        <th class="col-md-2">CRC</th>
+        <th class="col-md-2">Status</th>
+        <th class="col-md-1">Option</th>
       </tr>
       </thead>
       <tbody>
-      {{each _page.users as #user}}
+      {{each _page.maps as #map}}
       <tr>
-        <td><img class="avatar img-circle" src="{{#user.avatar}}"/></td>
-        <td>{{#user.displayName}}</td>
-        <td>{{#user.email}}</td>
-        <td>{{#user.group}}</td>
+        <td>{{this.mapName}}</td>
+        <td>{{this.mapTiles}}</td>
+        <td>{{this.mapCRC}}</td>
+        <td>{{this.mapStatus}}</td>
+        <td>
+          <div class="btn-group btn-group-sm">
+            <!--<a href="/adm/map/{{this.id}}" class="btn btn-default" on-click="editMap.show()"><span class="glyphicon glyphicon-pencil"></span></a>-->
+            <button type="button" class="btn btn-default" on-click="delMap(this.id)"><span class="glyphicon glyphicon-trash"></span></button>
+          </div>
+        </td>
       </tr>
       {{/each}}
       </tbody>
     </table>
+    </div>
   </div>
