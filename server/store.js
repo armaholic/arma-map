@@ -24,7 +24,7 @@ function store(derby) {
     };
   });
 
-  store.shareClient.backend.addProjection('sg', 'briefings', 'json0', {id: true, mapId: true, userId: true, timestamps: true});
+  store.shareClient.backend.addProjection('sg', 'briefings', 'json0', {id: true, mapId: true, userId: true, markers: true, timestamps: true});
 
   return store;
 }

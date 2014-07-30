@@ -21,17 +21,18 @@ app.component('home', Home);
 function Home() {};
 
 Home.prototype.newBriefing = function (model, dom) {
-  var mapId = this.model.get('_page.mapId')
-  if(!mapId) return
+  var model = this.model;
+  var mapId = model.root.get('_page.mapId');
+  var userId = model.root.get('_session.userId');
+  if (!mapId || !userId) return;
 
-  var userId = this.model.get('_session.userId');
-
-  var briefingId = this.model.root.add('briefings', {
+  var briefingId = model.root.add('sg', {
     mapId: mapId,
-    userId: userId
+    userId: userId,
+    markers: {}
   });
 
-  app.history.push('/sg/'+ briefingId);
+  app.history.push('/sg/' + briefingId);
 }
 
 app.component('camp', Campaign);
@@ -87,12 +88,12 @@ Campaign.prototype.create = function (model, dom) {
 
   map.on("mousemove", function (e) {
     coordinates.innerHTML = 'Lat: ' + e.latlng.lat + ' Lon: ' + e.latlng.lng + ' <br/> GPS: ' + fromLatLngToGps(e.latlng);
-  /*gpsCoordinates.innerHTML = fromLatLngToGps(e.latlng);
+    /*gpsCoordinates.innerHTML = fromLatLngToGps(e.latlng);
 
-   var Xin = e.latlng.lng * 100;
-   var Yin = 15360 - e.latlng.lat * 100;
-   var heading = 0;
-   editorCoordinates.innerHTML = '[' + heading + ',[' + Xin + ',' + Yin + ',0]]';*/
+     var Xin = e.latlng.lng * 100;
+     var Yin = 15360 - e.latlng.lat * 100;
+     var heading = 0;
+     editorCoordinates.innerHTML = '[' + heading + ',[' + Xin + ',' + Yin + ',0]]';*/
   });
 
 
@@ -120,18 +121,23 @@ Campaign.prototype.create = function (model, dom) {
   }
 }
 
+
 SG.prototype.create = function (model, dom) {
 
-  var mapCRC = this.model.get('.maps');
+  var model = this.model;
+  var mapId = model.root.get('_page.mapId');
+  var mapCRC = model.root.get('maps.' + mapId + '.mapCRC');
+  var mapName = model.root.get('maps.' + mapId + '.mapName');
+  var mapTiles = model.root.get('maps.' + mapId + '.mapTiles');
 
-  var b = 0.5859375 / 15.36, c = L.latLng([0, 0]);
+  var b = mapCRC, c = L.latLng([0, 0]);
   var mapOptions = {
     center: [5, 7],
     zoom: 3,
     minZoom: 1,
     maxZoom: 6,
     attributionControl: false,
-    layers: [L.tileLayer('/tiles/chernarus_new/{z}/{x}_{y}.jpg', {
+    layers: [L.tileLayer(mapTiles, {
       continuousWorld: false,
       noWrap: true
     })],
@@ -164,6 +170,28 @@ SG.prototype.create = function (model, dom) {
   };
   canvasTiles.addTo(map);
 
+  var drawnItems = new L.FeatureGroup();
+  map.addLayer(drawnItems);
+
+  var drawControl = new L.Control.Draw({
+/*    draw: {
+      marker: {
+        icon: L.mapbox.marker.icon({
+          'marker-color': 'ff8888'
+        })
+      }
+    },*/
+    edit: {
+      featureGroup: drawnItems
+    },
+    position: 'bottomright'
+  });
+  map.addControl(drawControl);
+
+  map.on('draw:created', function(e) {
+    drawnItems.addLayer(e.layer);
+  });
+
 }
 
 app.get('*', function (page, model, params, next) {
@@ -179,21 +207,37 @@ app.get('*', function (page, model, params, next) {
   }
 });
 
-app.get('/', function(page, model) {
-  model.subscribe('maps', function () {
+app.get('/', function (page, model) {
+  var userId = model.root.get('_session.userId');
+  var sgData = model.query('sg', {userId: userId});
+  model.subscribe('maps', sgData, function () {
     model.filter('maps', {}).ref('_page.maps');
+    model.filter('sg', {}).ref('_page.sgs');
     page.render('home');
   });
 });
 
-app.get('/camp', function(page, model) {
+app.get('/camp', function (page, model) {
   page.render('camp');
 });
 
-app.get('/sg/:id', function(page, model, params, next) {
-  model.subscribe('sg', function () {
-    model.filter('sg.' + params.id, {}).ref('_page.sg');
-    page.render('sg');
+app.get('/sg/:id', function(page, model, params, next){
+  var sgId = params.id;
+  var sgData = model.query('sg', {_id: sgId});
+  model.subscribe(sgData, function(){
+    model.start('_page.mapId', 'sg', 'getMapIds');
+    var map = model.query('maps', '_page.mapId');
+    model.subscribe(map, function(){
+      page.render('sg');
+    });
   });
 });
 
+app.on('model', function(model){
+  model.fn('getMapIds', function (map) {
+    var ids = {};
+    for (var key in map) ids[map[key].mapId] = true;
+    var tmp = Object.keys(ids);
+    return Object.keys(ids);
+  });
+});

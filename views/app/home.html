@@ -14,14 +14,22 @@
               <select class="form-control">
                 <option selected="selected">Выберете остров</option>
                 {{each #root._page.maps as #map}}
-                <option selected="{{_page.mapId === #map.id}}" value="{{#map.id}}">
+                <option selected="{{#root._page.mapId === #map.id}}" value="{{#map.id}}">
                   {{#map.mapName}}
                 </option>
                 {{/}}
               </select>
               <a on-click="newBriefing()" class="btn dtn-default btn-block">Serious games</a>
             </div>
-
+            {{if #root._page.sgs}}
+            <hr/>
+            <h5>Созданные брифинги</h5>
+            <div class="btn-group btn-block">
+              {{each #root._page.sgs as #sg}}
+              <a href="/sg/{{#sg.id}}" class="btn dtn-default btn-block">{{#sg.id}}</a>
+              {{/}}
+            </div>
+            {{/}}
           </div>
         </div>
       </div>
