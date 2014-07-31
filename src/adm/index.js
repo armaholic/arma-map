@@ -41,9 +41,11 @@ adminApp.proto.addMap = function(){
 };
 
 adminApp.proto.delMap = function(mapId){
-  this.model.del('maps.' + mapId);
+  if (mapId) this.model.del('maps.' + mapId);
 };
-
+adminApp.proto.delSg = function(sgId){
+  if (sgId) this.model.del('briefings.' + sgId);
+};
 /*adminApp.proto.editMap = function(){
   var mapName = this.model.get('_page.mapName');
   var mapTiles = this.model.get('_page.mapTiles');
@@ -102,6 +104,12 @@ adminApp.get('/adm/camp', function(page, model, params, next) {
   model.subscribe('camp', function () {
     model.filter('camp', {}).ref('_page.camp');
     page.render('camp');
+  });
+});
+adminApp.get('/adm/briefings', function(page, model, params, next) {
+  model.subscribe('briefings', function () {
+    model.filter('briefings', {}).ref('_page.briefings');
+    page.render('briefings');
   });
 });
 

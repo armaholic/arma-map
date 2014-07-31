@@ -35,6 +35,11 @@ Home.prototype.newBriefing = function (model, dom) {
   app.history.push('/sg/' + briefingId);
 }
 
+Home.prototype.delSg = function(sgId){
+  if (sgId) this.model.root.del('sg.' + sgId);
+};
+
+
 app.component('camp', Campaign);
 function Campaign() {};
 
@@ -130,7 +135,7 @@ SG.prototype.create = function (model, dom) {
   var mapName = model.root.get('maps.' + mapId + '.mapName');
   var mapTiles = model.root.get('maps.' + mapId + '.mapTiles');
 
-  var b = mapCRC, c = L.latLng([0, 0]);
+  var b = mapCRC, c = L.latLng([0, 0]), map;
   var mapOptions = {
     center: [5, 7],
     zoom: 3,
@@ -141,7 +146,7 @@ SG.prototype.create = function (model, dom) {
       continuousWorld: false,
       noWrap: true
     })],
-    crs: L.CRS.Chernarus = L.Util.extend({}, L.CRS, {
+    crs: L.CRS.CustomCRC = L.Util.extend({}, L.CRS, {
       latLngToPoint: function (e, d) {
         var a = L.latLng([e.lat - c.lat, e.lng - c.lng]),
           a = this.projection.project(a),
@@ -193,6 +198,7 @@ SG.prototype.create = function (model, dom) {
   });
 
 }
+
 
 app.get('*', function (page, model, params, next) {
   if (model.get('_session.loggedIn')) {

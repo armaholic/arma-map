@@ -2,13 +2,14 @@
   <header>
     {{if #root._session.loggedIn}}
     <div class="modal show">
-      <div class="modal-dialog modal-sm">
+      <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header text-center">
             <img src="/images/logo.jpg"/>
           </div>
           <div class="modal-body">
             <a href="/camp" class="btn dtn-default btn-block" value="null">Campaign</a>
+            {{if #root._page.maps}}
             <hr/>
             <div class="btn-group btn-block">
               <select class="form-control">
@@ -21,13 +22,18 @@
               </select>
               <a on-click="newBriefing()" class="btn dtn-default btn-block">Serious games</a>
             </div>
+            {{/}}
             {{if #root._page.sgs}}
             <hr/>
             <h5>Созданные брифинги</h5>
-            <div class="btn-group btn-block">
-              {{each #root._page.sgs as #sg}}
-              <a href="/sg/{{#sg.id}}" class="btn dtn-default btn-block">{{#sg.id}}</a>
-              {{/}}
+            <div class="btn-group btn-block" style="max-height: 150px; overflow-y: auto;">
+              <ul class="list-group">
+                {{each #root._page.sgs as #sg}}
+                <li class="list-group-item"><a href="/sg/{{this.id}}" class="btn btn-link">{{this.id}}</a>
+                  <span class="pull-right"> <button type="button" class="btn btn-link" on-click="delSg(this.id)"><span class="glyphicon glyphicon-trash"></span></button></span>
+                </li>
+                {{/}}
+              </ul>
             </div>
             {{/}}
           </div>

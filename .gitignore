@@ -5,3 +5,4 @@ npm-debug.log
 .yo-rc.json
 /public/derby
 /public/tiles
+/test
