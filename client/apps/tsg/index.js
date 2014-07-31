@@ -6,8 +6,8 @@ var app = module.exports = derby.createApp('app', __filename);
 if (!derby.util.isProduction) global.app = app;
 
 app.serverUse(module, 'derby-stylus');
-app.loadViews(path.join(__dirname, '/../../views/app'));
-app.loadStyles(path.join(__dirname, '/../../styles/app'));
+app.loadViews(path.join(__dirname, '/views'));
+app.loadStyles(path.join(__dirname, '/styles'));
 app.use(require('derby-login/components'));
 app.component(require('./../../components/login-dropdown'));
 

@@ -13,19 +13,19 @@
             <hr/>
             <div class="btn-group btn-block">
               <select class="form-control">
-                <option selected="selected">Выберете остров</option>
+                <option selected="selected">choose the island</option>
                 {{each #root._session.maps as #map}}
                 <option selected="{{#root._session.mapId === this.id}}" value="{{this.id}}">
                   {{this.mapName}}
                 </option>
                 {{/}}
               </select>
-              <a on-click="newBriefing()" class="btn dtn-default btn-block">Serious games</a>
+              <a on-click="newBriefing()" class="btn dtn-default btn-block">New briefing by SG</a>
             </div>
             {{/}}
             {{if #root._session.sgs}}
             <hr/>
-            <h5>Созданные брифинги</h5>
+            <h5 class="text-center">Started briefings</h5>
             <div class="btn-group btn-block" style="max-height: 150px; overflow-y: auto;">
               <ul class="list-group">
                 {{each #root._session.sgs as #sg}}

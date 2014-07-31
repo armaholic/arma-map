@@ -6,8 +6,8 @@ var adminApp = module.exports = derby.createApp('adminApp', __filename);
 if (!derby.util.isProduction) global.adminApp = adminApp;
 
 adminApp.serverUse(module, 'derby-stylus');
-adminApp.loadViews(path.join(__dirname, '/../../views/adm'));
-adminApp.loadStyles(path.join(__dirname, '/../../styles/adm'));
+adminApp.loadViews(path.join(__dirname, '/views'));
+adminApp.loadStyles(path.join(__dirname, '/styles'));
 adminApp.use(require('derby-login/components'));
 adminApp.component(require('./../../components/login-dropdown'));
 adminApp.use(require('./../../components/d-bootstrap'));
