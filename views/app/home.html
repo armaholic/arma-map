@@ -9,26 +9,26 @@
           </div>
           <div class="modal-body">
             <a href="/camp" class="btn dtn-default btn-block" value="null">Campaign</a>
-            {{if #root._page.maps}}
+            {{if #root._session.maps}}
             <hr/>
             <div class="btn-group btn-block">
               <select class="form-control">
                 <option selected="selected">Выберете остров</option>
-                {{each #root._page.maps as #map}}
-                <option selected="{{#root._page.mapId === #map.id}}" value="{{#map.id}}">
-                  {{#map.mapName}}
+                {{each #root._session.maps as #map}}
+                <option selected="{{#root._session.mapId === this.id}}" value="{{this.id}}">
+                  {{this.mapName}}
                 </option>
                 {{/}}
               </select>
               <a on-click="newBriefing()" class="btn dtn-default btn-block">Serious games</a>
             </div>
             {{/}}
-            {{if #root._page.sgs}}
+            {{if #root._session.sgs}}
             <hr/>
             <h5>Созданные брифинги</h5>
             <div class="btn-group btn-block" style="max-height: 150px; overflow-y: auto;">
               <ul class="list-group">
-                {{each #root._page.sgs as #sg}}
+                {{each #root._session.sgs as #sg}}
                 <li class="list-group-item"><a href="/sg/{{this.id}}" class="btn btn-link">{{this.id}}</a>
                   <span class="pull-right"> <button type="button" class="btn btn-link" on-click="delSg(this.id)"><span class="glyphicon glyphicon-trash"></span></button></span>
                 </li>

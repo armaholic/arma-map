@@ -22,7 +22,7 @@ function Home() {};
 
 Home.prototype.newBriefing = function (model, dom) {
   var model = this.model;
-  var mapId = model.root.get('_page.mapId');
+  var mapId = model.root.get('_session.mapId');
   var userId = model.root.get('_session.userId');
   if (!mapId || !userId) return;
 
@@ -126,11 +126,11 @@ Campaign.prototype.create = function (model, dom) {
   }
 }
 
-
 SG.prototype.create = function (model, dom) {
 
   var model = this.model;
-  var mapId = model.root.get('_page.mapId');
+  var sgId = model.root.get('_session.sgId');
+  var mapId = model.root.get('sg.' + sgId + '.mapId');
   var mapCRC = model.root.get('maps.' + mapId + '.mapCRC');
   var mapName = model.root.get('maps.' + mapId + '.mapName');
   var mapTiles = model.root.get('maps.' + mapId + '.mapTiles');
@@ -203,9 +203,12 @@ SG.prototype.create = function (model, dom) {
 app.get('*', function (page, model, params, next) {
   if (model.get('_session.loggedIn')) {
     var userId = model.get('_session.userId');
+    var sgs = model.query('sg', {userId: userId});
     $user = model.at('users.' + userId);
-    model.subscribe($user, function () {
+    model.subscribe($user, 'maps', sgs, function () {
       model.ref('_session.user', $user);
+      model.filter('sg', {}).ref('_session.sgs');
+      model.filter('maps', {}).ref('_session.maps');
       next();
     });
   } else {
@@ -214,13 +217,7 @@ app.get('*', function (page, model, params, next) {
 });
 
 app.get('/', function (page, model) {
-  var userId = model.root.get('_session.userId');
-  var sgData = model.query('sg', {userId: userId});
-  model.subscribe('maps', sgData, function () {
-    model.filter('maps', {}).ref('_page.maps');
-    model.filter('sg', {}).ref('_page.sgs');
-    page.render('home');
-  });
+  page.render('home');
 });
 
 app.get('/camp', function (page, model) {
@@ -228,14 +225,10 @@ app.get('/camp', function (page, model) {
 });
 
 app.get('/sg/:id', function(page, model, params, next){
-  var sgId = params.id;
-  var sgData = model.query('sg', {_id: sgId});
+  var sgData = model.query('sg', {_id: params.id});
+  model.set('_session.sgId', params.id);
   model.subscribe(sgData, function(){
-    model.start('_page.mapId', 'sg', 'getMapIds');
-    var map = model.query('maps', '_page.mapId');
-    model.subscribe(map, function(){
       page.render('sg');
-    });
   });
 });
 
