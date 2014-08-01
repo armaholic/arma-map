@@ -14,6 +14,8 @@ app.component(require('./../../components/login-dropdown'));
 app.proto.create = function (model) {
   require('mapbox.js');
   require('leaflet-draw');
+  require('leaflet-hash');
+  require('./libs/Leaflet.StyleEditor.min.js');
   //require('./../../public/js/routie.min.js');
 }
 
@@ -82,12 +84,13 @@ Campaign.prototype.create = function (model, dom) {
   var map = L.map('mapbox-container', mapOptions);
   map.zoomControl.setPosition('bottomright');
 
+  var hash = new L.Hash(map);
+
   var canvasTiles = L.tileLayer.canvas();
   canvasTiles.drawTile = function (canvas, tilePoint, zoom) {
     var ctx = canvas.getContext('2d');
   };
-  canvasTiles.addTo(map);
-
+  canvasTiles.addTo(canvasTiles);
 
   var coordinates = document.getElementById('mapbox-coordinates');
 
@@ -169,11 +172,19 @@ SG.prototype.create = function (model, dom) {
   var map = L.map('mapbox-container', mapOptions);
   map.zoomControl.setPosition('bottomright');
 
+  var hash = new L.Hash(map);
+
   var canvasTiles = L.tileLayer.canvas();
   canvasTiles.drawTile = function (canvas, tilePoint, zoom) {
     var ctx = canvas.getContext('2d');
   };
   canvasTiles.addTo(map);
+
+
+  var styleEditor = L.control.styleEditor({
+    position: "bottomright"
+  });
+  map.addControl(styleEditor);
 
   var drawnItems = new L.FeatureGroup();
   map.addLayer(drawnItems);
